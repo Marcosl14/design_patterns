@@ -1,4 +1,4 @@
-// Server interface
+// Server interface - Receiver
 interface IServer {
     turnOff(): void;
     turnOn(): void;
@@ -145,7 +145,7 @@ class TurnOffServer implements Command {
     }
 }
 
-// Invoker
+// Invoker - Emitter
 class Invoker {
     private command: Command;
 
