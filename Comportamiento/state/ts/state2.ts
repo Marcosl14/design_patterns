@@ -5,28 +5,30 @@ interface PlayerState {
     stop(): void;
 }
 
-// Implementación concreta del estado "Reproduciendo"
 class PlayingState implements PlayerState {
+    constructor(private player: MusicPlayer) {}
+
     play(): void {
         console.log('Already playing...');
     }
 
     pause(): void {
         console.log('Pausing the music...');
-        // Aquí podrías tener la lógica para pausar la reproducción
+        this.player.setState(new PausedState(this.player));
     }
 
     stop(): void {
         console.log('Stopping the music...');
-        // Aquí podrías tener la lógica para detener la reproducción
+        this.player.setState(new StoppedState(this.player));
     }
 }
 
-// Implementación concreta del estado "En Pausa"
 class PausedState implements PlayerState {
+    constructor(private player: MusicPlayer) {}
+
     play(): void {
         console.log('Resuming the music...');
-        // Aquí podrías tener la lógica para reanudar la reproducción
+        this.player.setState(new PlayingState(this.player));
     }
 
     pause(): void {
@@ -35,15 +37,16 @@ class PausedState implements PlayerState {
 
     stop(): void {
         console.log('Stopping the music...');
-        // Aquí podrías tener la lógica para detener la reproducción
+        this.player.setState(new StoppedState(this.player));
     }
 }
 
-// Implementación concreta del estado "Detenido"
 class StoppedState implements PlayerState {
+    constructor(private player: MusicPlayer) {}
+
     play(): void {
         console.log('Starting the music...');
-        // Aquí podrías tener la lógica para iniciar la reproducción
+        this.player.setState(new PlayingState(this.player));
     }
 
     pause(): void {
@@ -61,7 +64,7 @@ class MusicPlayer {
 
     constructor() {
         // Por defecto, el reproductor comienza con la música detenida
-        this.state = new StoppedState();
+        this.state = new StoppedState(this);
     }
 
     setState(state: PlayerState): void {
@@ -86,15 +89,11 @@ class MusicPlayer {
 const musicPlayer = new MusicPlayer();
 
 musicPlayer.play(); // Output: "Starting the music..."
-musicPlayer.pause(); // Output: "Cannot pause, music is stopped."
-musicPlayer.stop(); // Output: "Already stopped..."
-
-musicPlayer.setState(new PlayingState());
 musicPlayer.play(); // Output: "Already playing..."
 musicPlayer.pause(); // Output: "Pausing the music..."
-musicPlayer.stop(); // Output: "Stopping the music..."
-
-musicPlayer.setState(new PausedState());
-musicPlayer.play(); // Output: "Resuming the music..."
 musicPlayer.pause(); // Output: "Already paused..."
 musicPlayer.stop(); // Output: "Stopping the music..."
+musicPlayer.stop(); // Output: "Already stopped..."
+musicPlayer.play(); // Output: "Starting the music..."
+musicPlayer.stop(); // Output: "Stopping the music..."
+musicPlayer.pause(); // Output: "Cannot pause, music is stopped."

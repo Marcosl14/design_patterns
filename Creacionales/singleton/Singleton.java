@@ -16,7 +16,7 @@ public class Singleton {
 // U otra manera: con lazy loading (solo crea la instancia si es necesario) ->
 
 public class Singleton {
-    private static final Singleton instance;
+    private static Singleton instance;
 
     private Singleton() {} // constructor privado
 
