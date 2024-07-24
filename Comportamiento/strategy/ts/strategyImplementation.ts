@@ -107,3 +107,5 @@ console.log(context.executeStrategy(5, 3)); // Salida: 2
 
 context.setStrategy(Operations.Multiplication);
 console.log(context.executeStrategy(5, 3)); // Salida: 15
+
+// junto con el patron composite se podria implementar una calculadora

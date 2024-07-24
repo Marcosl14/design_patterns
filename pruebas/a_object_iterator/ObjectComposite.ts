@@ -205,15 +205,14 @@ const pepe2 = {
   tete: 'tete',
 };
 
-// @ts-ignore
-import oldImmage from './input/old_immage.json';
-// @ts-ignore
-import newImmage from './input/new_immage.json';
-
 import FileHelpers from './helpers/File';
 
-const output = new ObjectComposite(oldImmage, newImmage, false);
+const output = new ObjectComposite(pepe, pepe2, false);
 
 FileHelpers.saveFile({ dirname: 'output', fileName: 'diffObject', extention: 'json', data: JSON.stringify(output.getDiffObject()) })
 
 // TODO: estaria bueno tener un summary. Que datos cambiaron...
+
+// TODO: no esta bien implementado. En composite tenemos nodos y hojas (es el elemento mas basico)
+// digamos si la entrada es un objeto, creamos un objeto si es un atributo, creamos la clase atributo
+// es como desmenuzar lo hecho aca en clases...
